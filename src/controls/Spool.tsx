@@ -6,7 +6,8 @@ import { ControlProps } from "./ControlProps";
 export default ({
   disabled,
   active,
-  role
+  role,
+  onClick
 }: ControlProps & { role: "forward" | "backward" }) => (
   <>
     <svg style={{ display: "none" }}>
@@ -25,6 +26,7 @@ export default ({
     </svg>
     <button
       disabled={disabled}
+      onClick={onClick}
       className={classnames("spool-button", {
         "spool-button__disabled": disabled
       })}
