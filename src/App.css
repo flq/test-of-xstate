@@ -1,0 +1,19 @@
+.App {
+    height: 100%;
+    padding: 2rem;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.controls {
+    width: auto;
+    margin: .5rem;
+}
+
+.state {
+    font-size: 2rem;
+    color: chocolate;
+}

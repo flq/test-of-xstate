@@ -1,0 +1,34 @@
+.spool-button {
+  overflow: hidden;
+  position: relative;
+  
+  background: lightblue;
+
+  height: 100px;
+  width: 100px;
+}
+
+.spool-button__disabled {
+  opacity: 0.5;
+}
+
+.spool-button--circle {
+  fill: green;
+}
+
+.spool-button--circle__active {
+  fill: lime;
+}
+
+.spool-button--inner {
+  fill: white;
+}
+
+.spool-button--inner__backward {
+  transform: rotate(180deg);
+  transform-origin: 50% 50%;
+}
+
+.spool-button--inner__active {
+  fill: green;
+}

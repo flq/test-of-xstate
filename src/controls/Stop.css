@@ -1,0 +1,29 @@
+.stop-button {
+  overflow: hidden;
+  position: relative;
+  
+  background: lightblue;
+
+  height: 100px;
+  width: 100px;
+}
+
+.stop-button__disabled {
+  opacity: 0.5;
+}
+
+.stop-button--circle {
+  fill: red;
+}
+
+.stop-button--circle__active {
+  fill: lightsalmon;
+}
+
+.stop-button--inner {
+  fill: white;
+}
+
+.stop-button--inner__active {
+  fill: red;
+}

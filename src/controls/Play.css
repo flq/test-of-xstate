@@ -20,10 +20,10 @@
   fill: lime;
 }
 
-.play-button--triangle {
+.play-button--inner {
   fill: white;
 }
 
-.play-button--triangle__active {
+.play-button--inner__active {
   fill: green;
 }
