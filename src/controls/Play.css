@@ -1,0 +1,29 @@
+.play-button {
+  overflow: hidden;
+  position: relative;
+  
+  background: lightblue;
+
+  height: 100px;
+  width: 100px;
+}
+
+.play-button__disabled {
+  opacity: 0.5;
+}
+
+.play-button--circle {
+  fill: green;
+}
+
+.play-button--circle__active {
+  fill: lime;
+}
+
+.play-button--triangle {
+  fill: white;
+}
+
+.play-button--triangle__active {
+  fill: green;
+}
