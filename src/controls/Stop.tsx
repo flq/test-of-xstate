@@ -5,7 +5,8 @@ import { ControlProps } from "./ControlProps";
 
 export default ({
   disabled,
-  active
+  active,
+  onClick
 }: ControlProps) => (
   <>
     <svg style={{ display: "none" }}>
@@ -19,13 +20,14 @@ export default ({
       <polygon
         id="stop-button-inner"
         name="stop-button-inner"
-        points="350,300 700,300 700,700 350,700"
+        points="300,300 700,300 700,700 300,700"
       />
     </svg>
     <button
       className={classnames("stop-button", {
         "stop-button__disabled": disabled
       })}
+      onClick={onClick}
     >
       <svg name="stop-button" viewBox="0 0 1000 1000">
         <use

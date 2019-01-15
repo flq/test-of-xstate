@@ -1,8 +1,48 @@
 import React, { Component } from "react";
+import { Machine, StateValue } from "xstate";
+import { interpret } from "xstate/lib/interpreter";
 import "./App.css";
 import { Spool, Stop, Play } from "./controls";
+import machineBuilder, {
+  TapePlayerContext,
+  TapePlayerEvent,
+  EventId,
+  AvailableStates
+} from "./TapePlayerMachine";
+import { stat } from "fs";
 
-class App extends Component {
+interface TapePlayerComponentState {
+  currentState: StateValue | null;
+  nextPossibleStates: string[];
+}
+
+class App extends Component<{}, TapePlayerComponentState> {
+  stateMachine: ReturnType<App["createStateMachine"]>;
+
+  state = { currentState: null, nextPossibleStates: [] }
+  constructor(props: {}) {
+    super(props);
+    this.stateMachine = this.createStateMachine();
+  }
+
+  createStateMachine = () => {
+    const [states, options] = machineBuilder();
+    const machine = Machine<TapePlayerContext, any, TapePlayerEvent>(
+      states,
+      options
+    );
+    const service = interpret(machine).onTransition(state => {
+      this.setState({
+        currentState: state.value,
+        nextPossibleStates: state.nextEvents
+      });
+    });
+    return service;
+  };
+
+  componentDidMount() {
+    this.stateMachine.start();
+  }
 
   render() {
     return (
@@ -10,31 +50,53 @@ class App extends Component {
         <div className="controls">
           <Spool
             role="backward"
-            disabled={false}
-            active={false}
+            disabled={this.mayNotSend("REWIND")}
+            active={this.isCurrentState("rewinding")}
             onClick={this.backwardClick}
           />
-          <Stop disabled={false} active={false} onClick={this.stopClick} />
-          <Play disabled={false} active={true} onClick={this.playClick} />
+          <Stop
+            disabled={this.mayNotSend("STOP")}
+            active={this.isCurrentState("stopped")}
+            onClick={this.stopClick}
+          />
+          <Play
+            disabled={this.mayNotSend("PLAY")}
+            active={this.isCurrentState("playing")}
+            onClick={this.playClick}
+          />
           <Spool
             role="forward"
-            disabled={false}
-            active={false}
+            disabled={this.mayNotSend("FORWARD")}
+            active={this.isCurrentState("forwarding")}
             onClick={this.forwardClick}
           />
         </div>
-        <div className="state">Test</div>
+        <div className="state">{this.state.currentState}</div>
       </div>
     );
   }
 
-  backwardClick = () => {};
+  mayNotSend = (event: EventId) =>
+    this.state.nextPossibleStates.findIndex(v => v === event) == -1;
 
-  forwardClick = () => {};
+  isCurrentState = (state: AvailableStates) =>
+    state === this.state.currentState;
 
-  playClick = () => {};
+  backwardClick = () => {
+    this.stateMachine.send({ type: "REWIND" });
+  };
 
-  stopClick = () => {};
+  forwardClick = () => {
+    this.stateMachine.send({ type: "FORWARD" });
+  };
+
+  playClick = () => {
+    this.stateMachine.send({ type: "PLAY" });
+  };
+
+  stopClick = () => {
+    this.stateMachine.send({ type: "STOP" });
+  };
 }
 
 export default App;

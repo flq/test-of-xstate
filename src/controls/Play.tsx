@@ -5,7 +5,8 @@ import { ControlProps } from "./ControlProps";
 
 export default ({
   disabled,
-  active
+  active,
+  onClick
 }: ControlProps) => (
   <>
     <svg style={{ display: "none" }}>
@@ -26,6 +27,7 @@ export default ({
       className={classnames("play-button", {
         "play-button__disabled": disabled
       })}
+      onClick={onClick}
     >
       <svg name="play-button" viewBox="0 0 1000 1000">
         <use
