@@ -17,3 +17,15 @@
     font-size: 2rem;
     color: chocolate;
 }
+
+.tape-position {
+    font-size: 2rem;
+    color: brown;
+}
+
+.tape-position::before {
+    content: "pos.";
+    font-size: 1.5rem;
+    margin-right: .2rem;
+    color: brown;
+}

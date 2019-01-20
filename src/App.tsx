@@ -14,12 +14,13 @@ import { stat } from "fs";
 interface TapePlayerComponentState {
   currentState: StateValue | null;
   nextPossibleStates: string[];
+  tapePosition: number | null;
 }
 
 class App extends Component<{}, TapePlayerComponentState> {
   stateMachine: ReturnType<App["createStateMachine"]>;
 
-  state = { currentState: null, nextPossibleStates: [] }
+  state = { currentState: null, tapePosition: null, nextPossibleStates: [] }
   constructor(props: {}) {
     super(props);
     this.stateMachine = this.createStateMachine();
@@ -33,6 +34,7 @@ class App extends Component<{}, TapePlayerComponentState> {
     );
     const service = interpret(machine).onTransition(state => {
       this.setState({
+        tapePosition: state.context.pos,
         currentState: state.value,
         nextPossibleStates: state.nextEvents
       });
@@ -72,6 +74,7 @@ class App extends Component<{}, TapePlayerComponentState> {
           />
         </div>
         <div className="state">{this.state.currentState}</div>
+        <div className="tape-position">{this.state.tapePosition}</div>
       </div>
     );
   }
