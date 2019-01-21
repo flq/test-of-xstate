@@ -9,7 +9,6 @@ import machineBuilder, {
   EventId,
   AvailableStates
 } from "./TapePlayerMachine";
-import { stat } from "fs";
 
 interface TapePlayerComponentState {
   currentState: StateValue | null;
